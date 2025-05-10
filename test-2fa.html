@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>2FA Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .test-box {
+            flex: 1;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        .test-box h2 {
+            margin-top: 0;
+            color: #1a73e8;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #1557b0;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .success {
+            background-color: #e6f4ea;
+            color: #137333;
+        }
+        .error {
+            background-color: #fce8e6;
+            color: #c5221f;
+        }
+    </style>
+</head>
+<body>
+    <h1>2FA Test Page</h1>
+    <p>This page simulates 2FA prompts for testing the extension. Try both Okta and Microsoft styles.</p>
+
+    <div class="test-container">
+        <!-- Okta Style -->
+        <div class="test-box">
+            <h2>Okta Style</h2>
+            <form id="oktaForm">
+                <input type="text" 
+                       name="credentials.passcode" 
+                       placeholder="Enter verification code"
+                       autocomplete="one-time-code">
+                <button type="submit">Verify</button>
+            </form>
+            <div id="oktaStatus" class="status"></div>
+        </div>
+
+        <!-- Microsoft Style -->
+        <div class="test-box">
+            <h2>Microsoft Style</h2>
+            <form id="microsoftForm">
+                <input type="text" 
+                       name="otc" 
+                       placeholder="Enter code"
+                       autocomplete="one-time-code">
+                <button type="submit">Verify</button>
+            </form>
+            <div id="microsoftStatus" class="status"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simulate form submissions
+        document.getElementById('oktaForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            const status = document.getElementById('oktaStatus');
+            if (input.value.length === 6) {
+                status.textContent = 'Code accepted!';
+                status.className = 'status success';
+            } else {
+                status.textContent = 'Invalid code length';
+                status.className = 'status error';
+            }
+        });
+
+        document.getElementById('microsoftForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const input = this.querySelector('input');
+            const status = document.getElementById('microsoftStatus');
+            if (input.value.length === 6) {
+                status.textContent = 'Code accepted!';
+                status.className = 'status success';
+            } else {
+                status.textContent = 'Invalid code length';
+                status.className = 'status error';
+            }
+        });
+
+        // Log when inputs are filled
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('input', function() {
+                console.log('Input filled with:', this.value);
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "2FA Auto Filler",
+  "version": "1.0",
+  "description": "Automatically fills 2FA prompts using TOTP secrets",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.okta.com/*",
+    "*://*.microsoft.com/*",
+    "*://*.microsoftonline.com/*",
+    "file:///*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.okta.com/*",
+        "*://*.microsoft.com/*",
+        "*://*.microsoftonline.com/*",
+        "file:///*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+} 
