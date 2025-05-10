@@ -16,10 +16,10 @@ Remember to `Pin to toolbar` in the Extension Detail page, as you need that to `
 
 You can read more about how 2FA is done. But in a nushell, 
 
-1. service (say example.com) generates a 10-byte secret for, say, jerry@mist.com
-2. it generates the QRcode with content `otpauth://totp/example.com:jerry%40mist.com?secret=<base32-encoded secret>&issuer=example.com`
-3. your 2FA app (e.g. Google Authenticator) stores the secret
-4. your 2FA app can then generate 6-digit code from `extract_and_encode_part_of(hmac_sha1(secret, epoch_in_seconds / 30))`
+1. service (say example.com) generates a 10-byte secret and stores it in DB
+2. it then generates the QRcode with content `otpauth://totp/example.com:jerry%40mist.com?secret=<base32-encoded secret>&issuer=example.com` to allow you to configure your 2FA app
+3. your 2FA app (e.g. Google Authenticator) understands this URL and extracts/stores the secret
+4. your 2FA app can then generate 6-digit code from `extract_and_encode_part_of(hmac_sha1(secret, epoch_in_seconds / 30))` when you got prompted for the code
 
 
 ## Setup / Add Secrets
