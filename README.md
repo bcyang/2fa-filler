@@ -22,7 +22,7 @@ You can read more about how 2FA is done. But in a nushell,
 4. your 2FA app can then generate 6-digit code from `extract_and_encode_part_of(hmac_sha1(secret, epoch_in_seconds / 30))`
 
 
-## Setup Add Secrets
+## Setup / Add Secrets
 
 This may be the most troublesome part of the setup.
 
@@ -37,3 +37,11 @@ Second, use a QR Code reader (many apps on iOS or Andriod) to see the embedded U
 
 To test it, open the `test-2fa.html` and you should see the code generated under the corresponding service and it should match what you have in your Google Authenticator
 
+#### The experience with `Cursor`
+It did a goog job in the beginning. Creating all the necessary files, built the popup to manage secrets (using storage) and use messaging between content.js and background.js (service) for cleaner separation of front/backend. However,
+
+1. the TOTP generation code is wrong (the bit manipulation looks cryptic and result is wrong). I end up having GPT generate a code in its place (well, GPT's logic is right but has a syntax error, too)
+2. I asked cursor to tweak something, it ended up regenerate lots of codes and wiped out some of my changes. I wasn't super-suprised as this is what GenAI does. Whatever backend you use, it doesn't really have a state of mind.
+3. It tends not to do any clean-ups of the "littering" (intermediate stuff it generates when I ask it to do something - additional node packages, ...). I suppose this is not in GenAI's priority either.
+
+All in all, though, I'd give it a thump up - this allows me to crank out another useful tool for myself in an hour or two.
