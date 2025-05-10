@@ -37,6 +37,8 @@ Second, use a QR Code reader (many apps on iOS or Andriod) to see the embedded U
 
 To test it, open the `test-2fa.html` and you should see the code generated under the corresponding service and it should match what you have in your Google Authenticator
 
+## Footnotes
+
 #### The experience with `Cursor`
 It did a goog job in the beginning. Creating all the necessary files, built the popup to manage secrets (using storage) and use messaging between content.js and background.js (service) for cleaner separation of front/backend. However,
 
