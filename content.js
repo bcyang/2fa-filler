@@ -4,19 +4,22 @@ function detectServiceAndInput() {
 
     // First check for actual service domains
     if (hostname.includes('okta.com')) {
+        // login password and 2FA code shares the same input element
+        const username = document.querySelector('input[autocomplete=username]');
         const input = document.querySelector('input[name="credentials.passcode"]');
-        if (input) return { service: 'Okta', input };
+        if (! username && input) return { service: 'Okta', input };
     } else if (hostname.includes('microsoft.com') || hostname.includes('microsoftonline.com')) {
+        // untested
         const input = document.querySelector('input[name="otc"]');
         if (input) return { service: 'Microsoft', input };
+    } else if (document.URL.startsWith('file://')) {
+        // For our test page, check specific input names
+        const oktaInput = document.querySelector('input[name="credentials.passcode"]');
+        if (oktaInput) return { service: 'Okta', input: oktaInput };
+
+        const microsoftInput = document.querySelector('input[name="otc"]');
+        if (microsoftInput) return { service: 'Microsoft', input: microsoftInput };
     }
-
-    // For our test page, check specific input names
-    const oktaInput = document.querySelector('input[name="credentials.passcode"]');
-    if (oktaInput) return { service: 'Okta', input: oktaInput };
-
-    const microsoftInput = document.querySelector('input[name="otc"]');
-    if (microsoftInput) return { service: 'Microsoft', input: microsoftInput };
 
     return { service: null, input: null };
 }
